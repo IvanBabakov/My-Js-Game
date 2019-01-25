@@ -230,20 +230,23 @@ class LevelParser {
     return gamePole;
   }
 
-  createActors(gamePolePlan) {
-    let actors = [];
-    gamePolePlan.forEach((el, index) => {
-      for(let i of el) {
-        let x = el.indexOf(i);
-        let y = index;
-        if(this.actorFromSymbol(i) !== undefined) {
-          let actorType = this.actorFromSymbol(i);
-          let actor = new actorType(new Vector(x, y));
-          actors.push(actor);
-        }
-      }
-    })
-    return actors;
+  createActors(gamePolePlan = []) {
+    if (!this.dictionary) {
+        return [];
+      };
+    var actorList = [];
+
+    gamePolePlan.forEach((string, y) => {
+      string.split('').forEach((symbol, x) => {
+
+        var actor = this.actorFromSymbol(symbol);
+        if (!((typeof actor === 'function') && (new actor instanceof Actor))) {
+          return;
+        };
+        actorList.push(new actor(new Vector(x, y)));
+      });
+    });
+    return actorList;
   }
 
   parse(gamePolePlan) {
