@@ -234,12 +234,12 @@ class LevelParser {
     if (!this.dictionary) {
         return [];
       };
-    var actorList = [];
+    let actorList = [];
 
     gamePolePlan.forEach((string, y) => {
       string.split('').forEach((symbol, x) => {
 
-        var actor = this.actorFromSymbol(symbol);
+        let actor = this.actorFromSymbol(symbol);
         if (!((typeof actor === 'function') && (new actor instanceof Actor))) {
           return;
         };
